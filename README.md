@@ -1,6 +1,6 @@
-"Digit Recognizer" Kaggle competition
--- Assignment for the Coursera's Data Science At Scale Specialization track) --
-(August 2016)
+## "Digit Recognizer" Kaggle competition
+
+####Assignment for the Coursera's Data Science At Scale Specialization track (August 2016)
 
 We are provided with a set of 42000 grey-scale images of hand-written digits. Each of these images is composed of 28x28 pixels and displays a number between 0 and 9. Each pixel takes a value between 0 and 255. The training set contains 28x28=784 features and a label, which corresponds to the number drawn on the image.
 The goal is to train a model to be able to classify the 28000 images provided in the test set.
@@ -12,11 +12,13 @@ This competition is a classification one, so I tried a few methods to determine 
 As a first step, I considered all features. I did not normalize the data since all features are comprised between 0 and 255. I randomly split (with a seed) the provided training set into a training (60%) and a test (40%) sets. I used the same training and test sets for the 4 methods listed above.
 
 Below are the results I obtained on the test set I had created:
-           Classifier  Accuracy (%)  Run time (sec)
-        Random Forest     93.053571        4.287671
-           Linear SVM     90.851190      497.499010
-  Logistic Regression     89.226190     1723.002861
-              RBF SVM     11.261905     2087.622686
+
+Classifier          | Accuracy (%) | Run time (sec)
+--------------------|--------------|----------------
+Random Forest       | 93.053571    | 4.287671
+Linear SVM          | 90.851190    | 497.499010
+Logistic Regression | 89.226190    | 1723.002861
+RBF SVM             | 11.261905    | 2087.622686
 
 Random forest and linear SVM are the best performing algorithms here. The former is the fastest, taking only 4 seconds to run. So, I used random forest to determine the classes of the images in the competition's test set.
 
@@ -32,11 +34,13 @@ The results I obtained with the test set provided in the competition were 93.66%
 
 
 To improve on this result, I tried several optimizations:
+
 * principal component analysis: when keeping only principal components that explain 95% or 99% of the variance observed in the data, I obtained an accuracy of ~ 33% on the test set I had built
 * adaboost on decision trees: when using the default parameters, the algorithm reached an accuracy of ~ 85% on the test set I had created
 * grid search on the random forest (best performing algorithm here): by default, random forest uses 10 estimators (i.e. decision trees), so I ran the same algorithm, but with different numbers of estimators:
-	> first, every 5 from 5 to 95 estimators
-	> second, every 1 from 65 to 85 estimators (range on which the accuracy obtained in the first grid search was the highest)
-	> third, with 83 estimators (I obtained an accuracy of ~ 95.8% on the test set I had built)
+	* first, every 5 from 5 to 95 estimators
+	* second, every 1 from 65 to 85 estimators (range on which the accuracy obtained in the first grid search was the highest)
+	* third, with 83 estimators (I obtained an accuracy of ~ 95.8% on the test set I had built)
+	
 I submitted the classes I obtained with the latter solution. My accuracy reached 95.81%, i.e. 2.15 percentage points higher than with the default parameters. This accuracy is consistent with the one I obtained on the test set I had created.
 
